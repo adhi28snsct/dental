@@ -1,0 +1,100 @@
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="smileFullAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.35"/>
+      <stop offset="40%" stop-color="#F97316" stop-opacity="0.18"/>
+      <stop offset="70%" stop-color="#38BDF8" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#07131C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lipGradUpper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E11D48"/>
+      <stop offset="50%" stop-color="#BE123C"/>
+      <stop offset="100%" stop-color="#881337"/>
+    </linearGradient>
+    <linearGradient id="lipGradLower" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#BE123C"/>
+      <stop offset="50%" stop-color="#F43F5E"/>
+      <stop offset="100%" stop-color="#FB7185"/>
+    </linearGradient>
+    <linearGradient id="teethWhiteness" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="70%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#E0F2FE"/>
+    </linearGradient>
+    <linearGradient id="sparkleGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#F97316"/>
+    </linearGradient>
+    <filter id="smileGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Ambient Glow -->
+  <circle cx="400" cy="400" r="390" fill="url(#smileFullAura)"/>
+
+  <!-- Radiance Aura Rings -->
+  <circle cx="400" cy="400" r="350" stroke="#F97316" stroke-width="2" stroke-dasharray="16 12" opacity="0.45"/>
+  <circle cx="400" cy="400" r="290" stroke="#22D3EE" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- 3D Full Radiant Smile & Lips -->
+  <g filter="url(#smileGlow)">
+    <!-- Dark Oral Cavity Depth Background -->
+    <path d="M180 380 C 240 280, 560 280, 620 380 C 560 520, 240 520, 180 380 Z" fill="#1C1917"/>
+
+    <!-- Upper Teeth Arch (8 Perfectly Aligned Radiant Teeth) -->
+    <!-- Far Left Premolar -->
+    <path d="M220 385 C 225 310, 260 310, 265 385 C 260 410, 225 410, 220 385 Z" fill="url(#teethWhiteness)" stroke="#38BDF8" stroke-width="2"/>
+    <!-- Left Canine -->
+    <path d="M265 375 C 272 290, 310 290, 315 375 C 310 415, 272 415, 265 375 Z" fill="url(#teethWhiteness)" stroke="#38BDF8" stroke-width="2.5"/>
+    <!-- Left Lateral Incisor -->
+    <path d="M315 365 C 322 275, 360 275, 365 365 C 360 425, 322 425, 315 365 Z" fill="url(#teethWhiteness)" stroke="#38BDF8" stroke-width="2.5"/>
+    <!-- Central Left Master Incisor -->
+    <path d="M365 355 C 372 260, 400 260, 402 355 C 400 435, 372 435, 365 355 Z" fill="url(#teethWhiteness)" stroke="#22D3EE" stroke-width="3"/>
+    <!-- Central Right Master Incisor -->
+    <path d="M402 355 C 404 260, 432 260, 439 355 C 432 435, 404 435, 402 355 Z" fill="url(#teethWhiteness)" stroke="#22D3EE" stroke-width="3"/>
+    <!-- Right Lateral Incisor -->
+    <path d="M439 365 C 444 275, 482 275, 489 365 C 482 425, 444 425, 439 365 Z" fill="url(#teethWhiteness)" stroke="#38BDF8" stroke-width="2.5"/>
+    <!-- Right Canine -->
+    <path d="M489 375 C 494 290, 532 290, 539 375 C 532 415, 494 415, 489 375 Z" fill="url(#teethWhiteness)" stroke="#38BDF8" stroke-width="2.5"/>
+    <!-- Far Right Premolar -->
+    <path d="M539 385 C 544 310, 579 310, 584 385 C 579 410, 544 410, 539 385 Z" fill="url(#teethWhiteness)" stroke="#38BDF8" stroke-width="2"/>
+
+    <!-- Lower Lip Radiant Smiling Contour -->
+    <path d="M140 370 C 260 560, 540 560, 660 370 C 540 480, 260 480, 140 370 Z" 
+          fill="url(#lipGradLower)" stroke="#FDA4AF" stroke-width="2"/>
+
+    <!-- Upper Lip Cupid's Bow Smile Contour -->
+    <path d="M140 370 C 240 320, 350 310, 400 330 C 450 310, 560 320, 660 370 C 560 335, 440 340, 400 350 C 360 340, 240 335, 140 370 Z" 
+          fill="url(#lipGradUpper)" stroke="#FDA4AF" stroke-width="2"/>
+
+    <!-- Brilliant Diamond Sparkle Stars -->
+    <!-- Left Star -->
+    <g transform="translate(230, 260)">
+      <path d="M 0 -30 Q 0 0 -30 0 Q 0 0 0 30 Q 0 0 30 0 Q 0 0 0 -30 Z" fill="url(#sparkleGrad)"/>
+      <circle cx="0" cy="0" r="6" fill="#FFFFFF"/>
+    </g>
+
+    <!-- Top Right Big Star -->
+    <g transform="translate(580, 240)">
+      <path d="M 0 -45 Q 0 0 -45 0 Q 0 0 0 45 Q 0 0 45 0 Q 0 0 0 -45 Z" fill="url(#sparkleGrad)"/>
+      <circle cx="0" cy="0" r="8" fill="#FFFFFF"/>
+    </g>
+
+    <!-- Center Enamel Gleam -->
+    <g transform="translate(400, 390)">
+      <path d="M 0 -22 Q 0 0 -22 0 Q 0 0 0 22 Q 0 0 22 0 Q 0 0 0 -22 Z" fill="#FFFFFF"/>
+      <circle cx="0" cy="0" r="5" fill="#22D3EE"/>
+    </g>
+  </g>
+
+  <!-- Final Confident Smile Celebration HUD -->
+  <text x="180" y="150" fill="#F97316" font-size="14" font-family="monospace" font-weight="bold" letter-spacing="3">
+    [★] TREATMENT COMPLETE: RADIANT CONFIDENT SMILE
+  </text>
+  <text x="180" y="660" fill="#22D3EE" font-size="13" font-family="monospace" font-weight="bold" letter-spacing="2">
+    SMILE BRIGHTER EVERYDAY — DENTART SIGNATURE
+  </text>
+</svg>

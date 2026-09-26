@@ -1,0 +1,77 @@
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="dmgAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F97316" stop-opacity="0.25"/>
+      <stop offset="60%" stop-color="#22D3EE" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#07131C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="toothBodyDmg" x1="200" y1="180" x2="600" y2="650" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="25%" stop-color="#E2E8F0"/>
+      <stop offset="60%" stop-color="#94A3B8"/>
+      <stop offset="85%" stop-color="#64748B"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="crackGrad" x1="380" y1="220" x2="440" y2="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="50%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#7C2D12"/>
+    </linearGradient>
+    <linearGradient id="cavityGrad" x1="410" y1="260" x2="480" y2="340" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#9A3412"/>
+      <stop offset="70%" stop-color="#431407"/>
+      <stop offset="100%" stop-color="#1C1917"/>
+    </linearGradient>
+    <filter id="dmgGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Ambient Glow -->
+  <circle cx="400" cy="400" r="360" fill="url(#dmgAura)"/>
+
+  <!-- Diagnostic Measurement Circles & Grid -->
+  <circle cx="400" cy="400" r="320" stroke="#22D3EE" stroke-width="1.5" stroke-dasharray="8 12" opacity="0.3"/>
+  <circle cx="400" cy="400" r="260" stroke="#F97316" stroke-width="1" stroke-dasharray="4 8" opacity="0.4"/>
+  <line x1="80" y1="400" x2="720" y2="400" stroke="#22D3EE" stroke-width="1" stroke-dasharray="4 6" opacity="0.2"/>
+  <line x1="400" y1="80" x2="400" y2="720" stroke="#22D3EE" stroke-width="1" stroke-dasharray="4 6" opacity="0.2"/>
+
+  <!-- 3D Tooth Root & Crown Body (Damaged Initial State) -->
+  <g filter="url(#dmgGlow)">
+    <!-- Root Shadows -->
+    <path d="M280 460 C 260 550, 290 670, 330 680 C 370 660, 360 560, 380 470 Z" fill="#475569" opacity="0.8"/>
+    <path d="M420 470 C 440 560, 430 660, 470 680 C 510 670, 540 550, 520 460 Z" fill="#334155" opacity="0.8"/>
+
+    <!-- Main Molar Crown -->
+    <path d="M260 250 C 275 190, 340 180, 400 220 C 460 180, 525 190, 540 250 C 565 340, 580 430, 540 540 C 500 620, 450 560, 410 470 C 390 470, 350 560, 300 620 C 260 540, 235 340, 260 250 Z" 
+          fill="url(#toothBodyDmg)" stroke="#94A3B8" stroke-width="3"/>
+
+    <!-- Enamel Highlights (Left Cusp) -->
+    <path d="M280 240 C 295 205, 340 200, 380 230 C 350 250, 300 265, 280 240 Z" fill="#FFFFFF" opacity="0.6"/>
+    <path d="M420 230 C 460 200, 505 205, 520 240 C 500 265, 450 250, 420 230 Z" fill="#FFFFFF" opacity="0.4"/>
+
+    <!-- Cavity & Enamel Loss Lesion -->
+    <ellipse cx="445" cy="290" rx="35" ry="24" fill="url(#cavityGrad)" stroke="#F97316" stroke-width="2"/>
+    <ellipse cx="450" cy="288" rx="20" ry="12" fill="#1C1917"/>
+
+    <!-- Micro-Fracture / Enamel Crack Line -->
+    <path d="M400 220 L 385 280 L 420 340 L 390 410 L 410 470" 
+          stroke="url(#crackGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M385 280 L 350 310" stroke="#F97316" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M420 340 L 455 365" stroke="#F97316" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Laser Warning Indicators -->
+    <circle cx="445" cy="290" r="10" stroke="#F97316" stroke-width="2" stroke-dasharray="3 3"/>
+    <circle cx="445" cy="290" r="4" fill="#F97316"/>
+  </g>
+
+  <!-- Diagnostic Scan HUD Overlay -->
+  <rect x="180" y="140" width="440" height="520" rx="24" stroke="#F97316" stroke-width="1.5" stroke-dasharray="10 10" opacity="0.4"/>
+  <text x="210" y="175" fill="#F97316" font-size="14" font-family="monospace" font-weight="bold" letter-spacing="3">
+    [!] DIAGNOSTIC: DEEP CARIES & ENAMEL CRACK
+  </text>
+  <text x="210" y="635" fill="#22D3EE" font-size="13" font-family="monospace" font-weight="bold" letter-spacing="2">
+    STRUCTURAL LOSS: 38.4% | ANGLE: -14.2°
+  </text>
+</svg>
