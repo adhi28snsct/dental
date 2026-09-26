@@ -11,9 +11,7 @@ import {
   Sparkles,
   CheckCircle2,
   ArrowUpRight,
-  Activity,
   Zap,
-  Layers,
 } from "lucide-react";
 import { FadeIn, MagneticHover } from "./MotionWrapper";
 import SectionWrapper from "./SectionWrapper";
@@ -104,17 +102,14 @@ export default function ClinicTechnology() {
   // Scroll tracking for the glowing zigzag route
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 65%", "end 80%"],
+    offset: ["start 70%", "end 85%"],
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 25,
+    stiffness: 90,
+    damping: 24,
     restDelta: 0.001,
   });
-
-  // Calculate percentage for progress tracker pill
-  const progressPercent = useTransform(smoothProgress, [0, 1], [0, 100]);
 
   return (
     <SectionWrapper
@@ -123,7 +118,7 @@ export default function ClinicTechnology() {
       className="bg-[#FAFCFF] py-24 text-slate-900 lg:py-36"
     >
       <div id="technology" className="relative">
-        {/* Background ambient lighting */}
+        {/* Subtle background ambient glows */}
         <div className="pointer-events-none absolute left-1/4 top-0 h-[600px] w-[600px] rounded-full bg-cyan-100/60 blur-[160px]" />
         <div className="pointer-events-none absolute right-0 bottom-1/4 h-[500px] w-[500px] rounded-full bg-blue-100/50 blur-[150px]" />
 
@@ -148,23 +143,9 @@ export default function ClinicTechnology() {
               </h2>
 
               <p className="mx-auto mt-6 max-w-2xl font-sans text-base leading-relaxed text-slate-600">
-                Follow our 4-stage hospital-grade infrastructure route. Scroll down to navigate
-                through high-precision 3D diagnostics, surgical suites, and in-house ceramic robotics.
+                Explore our 4-stage hospital-grade infrastructure. Scroll down to follow the
+                integrated route across diagnostics, surgical suites, patient ergonomics, and in-house ceramic robotics.
               </p>
-            </FadeIn>
-
-            {/* Scroll Status Tracker Pill */}
-            <FadeIn direction="up" delay={0.2} className="mt-8 flex justify-center">
-              <div className="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white/95 px-5 py-2 text-xs font-bold shadow-sm backdrop-blur-md">
-                <span className="flex h-2.5 w-2.5 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
-                <span className="text-slate-500 uppercase tracking-widest text-[11px]">Roadmap Progress:</span>
-                <span className="font-display font-extrabold text-cyan-700">
-                  <motion.span>
-                    {Math.round(progressPercent.get())}%
-                  </motion.span>
-                  {" "}Active
-                </span>
-              </div>
             </FadeIn>
           </div>
 
@@ -176,34 +157,34 @@ export default function ClinicTechnology() {
             {/* DESKTOP ZIGZAG SVG ROUTE LINE (Center Zigzag Canvas) */}
             <div className="pointer-events-none absolute inset-0 hidden lg:block">
               <svg
-                viewBox="0 0 1000 1600"
+                viewBox="0 0 1000 1700"
                 fill="none"
                 preserveAspectRatio="none"
                 className="h-full w-full"
               >
                 <defs>
                   {/* Glowing Laser Gradient */}
-                  <linearGradient id="roadmapGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <linearGradient id="roadmapLaserGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" stopColor="#06b6d4" />
                     <stop offset="35%" stopColor="#3b82f6" />
                     <stop offset="70%" stopColor="#06b6d4" />
                     <stop offset="100%" stopColor="#2563eb" />
                   </linearGradient>
 
-                  <filter id="laserGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="6" result="blur" />
+                  <filter id="laserLineGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="5" result="blur" />
                     <feComposite in="SourceGraphic" in2="blur" operator="over" />
                   </filter>
                 </defs>
 
-                {/* Background Guide Track (Faint Dashed Line) */}
+                {/* Background Guide Track (Faint Dashed Road) */}
                 <path
                   d="M 500 40 
-                     C 500 120, 260 140, 260 220 
-                     C 260 380, 740 440, 740 620 
-                     C 740 800, 260 860, 260 1040 
-                     C 260 1220, 740 1280, 740 1440
-                     C 740 1520, 500 1540, 500 1580"
+                     C 500 100, 270 140, 270 230 
+                     C 270 420, 730 460, 730 650 
+                     C 730 840, 270 880, 270 1070 
+                     C 270 1260, 730 1300, 730 1490
+                     C 730 1580, 500 1620, 500 1680"
                   stroke="#cbd5e1"
                   strokeWidth="3"
                   strokeDasharray="6 8"
@@ -213,15 +194,15 @@ export default function ClinicTechnology() {
                 {/* Animated Glowing Tracing Laser Line */}
                 <motion.path
                   d="M 500 40 
-                     C 500 120, 260 140, 260 220 
-                     C 260 380, 740 440, 740 620 
-                     C 740 800, 260 860, 260 1040 
-                     C 260 1220, 740 1280, 740 1440
-                     C 740 1520, 500 1540, 500 1580"
-                  stroke="url(#roadmapGradient)"
+                     C 500 100, 270 140, 270 230 
+                     C 270 420, 730 460, 730 650 
+                     C 730 840, 270 880, 270 1070 
+                     C 270 1260, 730 1300, 730 1490
+                     C 730 1580, 500 1620, 500 1680"
+                  stroke="url(#roadmapLaserGrad)"
                   strokeWidth="5"
                   strokeLinecap="round"
-                  filter="url(#laserGlow)"
+                  filter="url(#laserLineGlow)"
                   style={{
                     pathLength: smoothProgress,
                   }}
@@ -240,26 +221,26 @@ export default function ClinicTechnology() {
               />
             </div>
 
-            {/* ZIGZAG ROADMAP CARDS LIST */}
+            {/* ZIGZAG ROADMAP CARDS LIST (Single Layer with Image as Background) */}
             <div className="space-y-16 sm:space-y-24 lg:space-y-36">
               {techRoadmap.map((item, index) => {
-                const isEven = index % 2 === 1; // 0=Left, 1=Right, 2=Left, 3=Right
+                const isRight = index % 2 === 1; // 0=Left, 1=Right, 2=Left, 3=Right
 
                 return (
-                  <RoadmapStepCard
+                  <RoadmapImageCard
                     key={item.id}
                     item={item}
                     index={index}
-                    isEven={isEven}
+                    isRight={isRight}
                   />
                 );
               })}
             </div>
 
-            {/* ROADMAP DESTINATION BADGE (Bottom Endpoint) */}
+            {/* ROADMAP DESTINATION ENDPOINT */}
             <FadeIn direction="up" delay={0.3} className="relative mt-24 text-center">
               <div className="inline-flex flex-col items-center">
-                {/* Glowing Node Point */}
+                {/* Glowing Center Pin */}
                 <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full border-4 border-white bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-xl shadow-cyan-500/30">
                   <Zap size={24} className="fill-current animate-bounce" />
                 </div>
@@ -299,152 +280,135 @@ export default function ClinicTechnology() {
   );
 }
 
-function RoadmapStepCard({
+function RoadmapImageCard({
   item,
   index,
-  isEven,
+  isRight,
 }: {
   item: TechItem;
   index: number;
-  isEven: boolean;
+  isRight: boolean;
 }) {
   const Icon = item.icon;
 
   return (
     <div
-      className={`relative flex flex-col items-center gap-8 lg:grid lg:grid-cols-2 lg:gap-16 ${
-        isEven ? "lg:direction-rtl" : ""
+      className={`relative flex w-full ${
+        isRight ? "lg:justify-end" : "lg:justify-start"
       }`}
     >
-      {/* =====================================================
-          SIDE A: THE INTERACTIVE PORCELAIN CARD
-      ====================================================== */}
       <motion.div
-        initial={{ opacity: 0, x: isEven ? 40 : -40, y: 30 }}
+        initial={{ opacity: 0, x: isRight ? 50 : -50, y: 30 }}
         whileInView={{ opacity: 1, x: 0, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.7, delay: index * 0.1 }}
-        className={`w-full ${isEven ? "lg:order-2" : "lg:order-1"}`}
+        className="relative w-full lg:max-w-[580px] pl-10 sm:pl-12 lg:pl-0"
       >
-        <div className="group relative overflow-hidden rounded-[2.5rem] border border-slate-200/90 bg-white p-7 sm:p-9 shadow-xl transition-all duration-500 hover:border-cyan-400 hover:shadow-2xl">
+        {/* =====================================================
+            SINGLE ROADMAP SHOWCASE CARD (IMAGE AS BACKGROUND)
+        ====================================================== */}
+        <div className="group relative min-h-[440px] sm:min-h-[480px] overflow-hidden rounded-[2.5rem] border border-slate-200/90 shadow-2xl transition-all duration-500 hover:border-cyan-400 hover:shadow-[0_30px_70px_rgba(6,182,212,0.2)] bg-slate-950">
           
-          {/* Subtle Ambient Card Glow */}
-          <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-cyan-100/50 blur-3xl transition-opacity duration-500 group-hover:opacity-100" />
-          
-          {/* Top Milestone Badge Bar */}
-          <div className="flex items-center justify-between gap-4 border-b border-slate-100 pb-5">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/25">
-                <Icon size={24} />
+          {/* Full-bleed Background Image with smooth hover scale */}
+          <div className="absolute inset-0 h-full w-full">
+            <Image
+              src={item.image}
+              alt={item.title}
+              fill
+              priority={index === 0}
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+
+          {/* Frosted High-Contrast Dark Gradient Mask */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-slate-950/35" />
+
+          {/* Ambient Corner Glow on Hover */}
+          <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-cyan-500/20 blur-3xl opacity-60 transition-opacity duration-500 group-hover:opacity-100" />
+
+          {/* Content Layer (Over the background image) */}
+          <div className="relative z-10 flex h-full flex-col justify-between p-7 sm:p-9 text-white">
+            
+            {/* Top Bar: Milestone Badge + Icon + Step */}
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/30">
+                  <Icon size={24} />
+                </div>
+                <div>
+                  <span className="font-sans text-[11px] font-extrabold uppercase tracking-[0.2em] text-cyan-300">
+                    {item.step}
+                  </span>
+                  <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                    {item.category}
+                  </p>
+                </div>
               </div>
-              <div>
-                <span className="font-sans text-[11px] font-extrabold uppercase tracking-[0.2em] text-cyan-600">
-                  {item.step}
-                </span>
-                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                  {item.category}
-                </p>
-              </div>
-            </div>
 
-            <span className="font-display text-3xl font-black text-slate-200 group-hover:text-cyan-600 transition-colors">
-              {item.id}
-            </span>
-          </div>
-
-          {/* Title & Subtitle */}
-          <div className="mt-5">
-            <h3 className="font-display text-2xl font-extrabold text-slate-950 sm:text-3xl tracking-tight group-hover:text-cyan-700 transition-colors">
-              {item.title}
-            </h3>
-            <p className="mt-1 font-sans text-xs font-semibold uppercase tracking-wider text-cyan-700">
-              {item.subtitle}
-            </p>
-            <p className="mt-3 font-sans text-sm leading-relaxed text-slate-600">
-              {item.description}
-            </p>
-          </div>
-
-          {/* Metric Highlights */}
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            {item.metrics.map((metric) => (
-              <div
-                key={metric.label}
-                className="rounded-2xl border border-slate-100 bg-slate-50/80 p-3.5 text-center transition-colors group-hover:border-cyan-200 group-hover:bg-cyan-50/40"
-              >
-                <p className="font-display text-xl font-black text-slate-950">
-                  {metric.value}
-                </p>
-                <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-                  {metric.label}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Spec Tags */}
-          <div className="mt-5 flex flex-wrap gap-2">
-            {item.specs.map((spec) => (
-              <span
-                key={spec}
-                className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-medium text-slate-700 shadow-sm"
-              >
-                <CheckCircle2 size={13} className="text-cyan-600 shrink-0" />
-                {spec}
-              </span>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* =====================================================
-          SIDE B: CINEMATIC VISUAL VIEWER
-      ====================================================== */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.92, y: 30 }}
-        whileInView={{ opacity: 1, scale: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7, delay: index * 0.15 }}
-        className={`w-full ${isEven ? "lg:order-1" : "lg:order-2"}`}
-      >
-        <div className="group relative h-[300px] sm:h-[380px] w-full overflow-hidden rounded-[2.5rem] border border-slate-200/90 bg-white shadow-xl">
-          <Image
-            src={item.image}
-            alt={item.title}
-            fill
-            priority={index === 0}
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-
-          {/* Ambient Lighting Mask */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/20" />
-
-          {/* Top Stage Tag */}
-          <div className="absolute top-5 left-5 z-10">
-            <div className="flex items-center gap-2 rounded-full border border-white/30 bg-white/90 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-slate-900 backdrop-blur-md shadow-sm">
-              <Sparkles size={13} className="text-cyan-600" />
-              <span>{item.category}</span>
-            </div>
-          </div>
-
-          {/* Bottom Interactive Spec Strip */}
-          <div className="absolute bottom-5 left-5 right-5 z-10 flex items-center justify-between rounded-2xl border border-white/20 bg-slate-950/80 px-5 py-3 text-white backdrop-blur-md">
-            <div className="flex items-center gap-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-cyan-500 text-white font-bold text-xs">
+              {/* Glowing Milestone Number Pin */}
+              <div className="flex h-11 w-11 items-center justify-center rounded-full border border-cyan-400/40 bg-black/50 text-cyan-300 font-display font-black text-sm shadow-md backdrop-blur-md">
                 {item.id}
               </div>
-              <span className="text-xs font-bold text-slate-100 line-clamp-1">
-                {item.title}
-              </span>
             </div>
 
-            <a
-              href="#appointment"
-              className="flex items-center gap-1 text-[11px] font-bold text-cyan-300 hover:text-white transition-colors"
-            >
-              <span>Explore</span>
-              <ArrowUpRight size={13} />
-            </a>
+            {/* Middle: Title, Subtitle, Description */}
+            <div className="my-6">
+              <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                {item.title}
+              </h3>
+
+              <p className="mt-1 font-sans text-xs font-semibold uppercase tracking-wider text-cyan-300">
+                {item.subtitle}
+              </p>
+
+              <p className="mt-3 font-sans text-sm leading-relaxed text-slate-200">
+                {item.description}
+              </p>
+            </div>
+
+            {/* Bottom: Metrics & Spec Chips */}
+            <div className="space-y-4 pt-4 border-t border-white/15">
+              {/* Metric Highlights */}
+              <div className="grid grid-cols-2 gap-3">
+                {item.metrics.map((metric) => (
+                  <div
+                    key={metric.label}
+                    className="rounded-2xl border border-white/15 bg-slate-950/60 p-3 text-center backdrop-blur-md transition-colors group-hover:border-cyan-400/30 group-hover:bg-cyan-950/40"
+                  >
+                    <p className="font-display text-xl font-black text-cyan-300">
+                      {metric.value}
+                    </p>
+                    <p className="text-[10px] font-semibold text-slate-300 uppercase tracking-wider">
+                      {metric.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Spec Tags */}
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <div className="flex flex-wrap gap-2">
+                  {item.specs.map((spec) => (
+                    <span
+                      key={spec}
+                      className="flex items-center gap-1.5 rounded-full border border-white/20 bg-black/40 px-3 py-1 text-xs font-medium text-slate-200 backdrop-blur-md"
+                    >
+                      <CheckCircle2 size={12} className="text-cyan-400 shrink-0" />
+                      {spec}
+                    </span>
+                  ))}
+                </div>
+
+                <a
+                  href="#appointment"
+                  className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-cyan-300 hover:text-white transition-colors ml-auto pt-1"
+                >
+                  <span>Book</span>
+                  <ArrowUpRight size={14} />
+                </a>
+              </div>
+            </div>
+
           </div>
         </div>
       </motion.div>
