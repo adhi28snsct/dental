@@ -183,8 +183,8 @@ export default function Hero() {
         </AnimatePresence>
 
         {/* High-Contrast Cinematic Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#FAFCFF] via-transparent to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-950/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/30" />
 
         {/* Dynamic ambient animated glow */}
         <motion.div
@@ -573,34 +573,9 @@ export default function Hero() {
       </div>
 
       {/* =====================================================
-          BOTTOM WHITE WAVE
-      ====================================================== */}
-      <div className="absolute bottom-[-1px] left-0 z-20 w-full">
-        <svg
-          viewBox="0 0 1440 240"
-          className="h-[170px] w-full lg:h-[210px]"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="
-              M0 95
-              C160 190 270 160 390 135
-              C540 105 650 105 780 135
-              C930 170 1030 180 1150 140
-              C1280 95 1350 80 1440 20
-              L1440 240
-              L0 240
-              Z
-            "
-            fill="#FAFCFF"
-          />
-        </svg>
-      </div>
-
-      {/* =====================================================
           HERO SERVICE CARDS (FROSTED PORCELAIN GLASS STRIP)
       ====================================================== */}
-      <div className="absolute bottom-[-10px] left-1/2 z-30 hidden w-full max-w-7xl -translate-x-1/2 px-6 lg:block">
+      <div className="relative z-30 mx-auto max-w-7xl px-6 pb-12 hidden lg:block">
         <div className="flex justify-end gap-4">
           {services.map((service, index) => {
             const Icon = service.icon;
@@ -650,7 +625,7 @@ export default function Hero() {
       </div>
 
       {/* Mobile service strip */}
-      <div className="relative z-30 grid grid-cols-2 gap-3 bg-[#FAFCFF] px-6 py-8 lg:hidden border-t border-slate-200">
+      <div className="relative z-30 grid grid-cols-2 gap-3 px-6 pb-12 lg:hidden">
         {services.map((service, index) => {
           const Icon = service.icon;
 
@@ -662,17 +637,17 @@ export default function Hero() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="rounded-2xl border border-slate-200 bg-white p-5 text-center text-slate-900 shadow-sm transition hover:border-cyan-400"
+              className="rounded-2xl border border-white/20 bg-white/90 p-4 text-center text-slate-900 shadow-md backdrop-blur-md transition hover:border-cyan-400"
             >
               <Icon
-                size={24}
-                className="mx-auto mb-2 text-cyan-600"
+                size={22}
+                className="mx-auto mb-1.5 text-cyan-600"
               />
-              <p className="text-sm font-semibold text-slate-900">
+              <p className="text-xs font-bold text-slate-900">
                 {service.title}
               </p>
               {service.subtitle && (
-                <p className="text-xs text-slate-500">
+                <p className="text-[10px] text-slate-500 font-medium">
                   {service.subtitle}
                 </p>
               )}
