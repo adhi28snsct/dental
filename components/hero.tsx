@@ -1,11 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   Play,
+  Pause,
+  Volume2,
+  VolumeX,
   Phone,
   ShieldCheck,
   Sparkles,
@@ -14,8 +17,45 @@ import {
   Stethoscope,
   Menu,
   X,
+  Layers,
+  Video,
 } from "lucide-react";
 import { Counter, MagneticHover } from "./MotionWrapper";
+
+const heroSlides = [
+  {
+    id: 1,
+    type: "image" as const,
+    src: "/hero.png",
+    label: "Gentle Family Care",
+    tagline: "Pain-free pediatric & family dentistry",
+    pillBadge: "01 • Family Care",
+  },
+  {
+    id: 2,
+    type: "image" as const,
+    src: "/services/cosmetic-dentistry.jpg",
+    label: "Cosmetic Veneers",
+    tagline: "Digital smile design & porcelain artistry",
+    pillBadge: "02 • Cosmetic Art",
+  },
+  {
+    id: 3,
+    type: "image" as const,
+    src: "/treatments/dental-implants.jpg",
+    label: "Dental Implants",
+    tagline: "Permanent biocompatible titanium restorations",
+    pillBadge: "03 • Implants",
+  },
+  {
+    id: 4,
+    type: "video" as const,
+    src: "/about-video.mp4",
+    label: "Live Clinic Tour",
+    tagline: "4K Hospital-grade surgical operatory suite",
+    pillBadge: "04 • Video Tour",
+  },
+];
 
 const services = [
   {
@@ -51,6 +91,7 @@ const navItems = [
   { label: "Master Lab", href: "#laboratory" },
   { label: "Services", href: "#services" },
   { label: "Treatments", href: "#treatments" },
+  { label: "Roadmap", href: "#technology" },
   { label: "Testimonials", href: "#reviews" },
   { label: "Contact", href: "#contact" },
 ];
@@ -58,37 +99,98 @@ const navItems = [
 export default function Hero() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("Home");
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const currentSlide = heroSlides[activeSlideIndex];
+
+  // Auto slide rotation every 7 seconds (if video is not currently focused by user)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlideIndex((prev) => (prev + 1) % heroSlides.length);
+    }, 7000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleVideoToggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const handleVideoTogglePlay = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        videoRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#101010] text-white">
+    <section className="relative min-h-screen overflow-hidden bg-[#0A0F1D] text-white">
 
       {/* =====================================================
-          BACKGROUND (ORIGINAL HERO IMAGE & CINEMATIC GLOW)
+          DYNAMIC HERO BACKGROUND (3 IMAGES + CLINIC VIDEO)
       ====================================================== */}
       <div className="absolute inset-0">
-        <motion.div
-          initial={{ scale: 1.08, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.4, ease: "easeOut" }}
-          className="relative h-full w-full"
-        >
-          <Image
-            src="/hero.png"
-            alt="Dentist treating a child"
-            fill
-            priority
-            className="object-cover object-center"
-          />
-        </motion.div>
+        <AnimatePresence mode="wait">
+          {currentSlide.type === "video" ? (
+            <motion.div
+              key="hero-video-slide"
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="relative h-full w-full"
+            >
+              <video
+                ref={videoRef}
+                src={currentSlide.src}
+                autoPlay
+                muted={isMuted}
+                loop
+                playsInline
+                className="h-full w-full object-cover object-center"
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              key={`hero-img-${currentSlide.id}`}
+              initial={{ opacity: 0, scale: 1.08 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.9, ease: "easeInOut" }}
+              className="relative h-full w-full"
+            >
+              <Image
+                src={currentSlide.src}
+                alt={currentSlide.label}
+                fill
+                priority
+                className="object-cover object-center"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {/* Dark cinematic overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/30" />
+        {/* High-Contrast Cinematic Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#FAFCFF] via-transparent to-black/40" />
 
         {/* Dynamic ambient animated glow */}
         <motion.div
           animate={{
             scale: [1, 1.25, 1],
-            opacity: [0.2, 0.35, 0.2],
+            opacity: [0.15, 0.3, 0.15],
             x: [0, 20, 0],
           }}
           transition={{
@@ -102,7 +204,7 @@ export default function Hero() {
         <motion.div
           animate={{
             scale: [1.2, 1, 1.2],
-            opacity: [0.15, 0.25, 0.15],
+            opacity: [0.12, 0.22, 0.12],
           }}
           transition={{
             duration: 10,
@@ -115,7 +217,7 @@ export default function Hero() {
       </div>
 
       {/* =====================================================
-          NAVBAR (INSPIRED BY REFERENCE DESIGN)
+          NAVBAR
       ====================================================== */}
       <motion.header
         initial={{ y: -30, opacity: 0 }}
@@ -157,7 +259,7 @@ export default function Hero() {
                 key={item.label}
                 href={item.href}
                 onClick={() => setActiveNav(item.label)}
-                className={`relative px-4 py-2 text-xs font-semibold tracking-wider transition-colors duration-300 ${
+                className={`relative px-3.5 py-1.5 text-xs font-semibold tracking-wider transition-colors duration-300 ${
                   isActive
                     ? "text-white"
                     : "text-slate-200 hover:text-white"
@@ -217,7 +319,7 @@ export default function Hero() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
-            className="relative z-40 border-b border-slate-200 bg-white px-6 py-6 shadow-2xl md:hidden"
+            className="relative z-40 border-b border-slate-200 bg-white px-6 py-6 shadow-2xl md:hidden text-slate-900"
           >
             <div className="flex flex-col gap-3">
               {navItems.map((item) => (
@@ -244,31 +346,37 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* =====================================================
-          HERO CONTENT (ORIGINAL LAYOUT & REFINED TYPOGRAPHY)
+          HERO CONTENT + 4-MODE SLIDE SWITCHER
       ====================================================== */}
       <div className="relative z-20 mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="flex min-h-[660px] items-center">
-          <div className="max-w-[650px] pb-40 pt-10 lg:pt-0">
+        <div className="flex min-h-[660px] flex-col justify-between pt-10 pb-36 lg:flex-row lg:items-center lg:pt-0">
+          
+          {/* LEFT: MAIN HEADLINE & ACTIONS */}
+          <div className="max-w-[650px]">
 
-            {/* Eyebrow badge */}
+            {/* Active Mode Pill */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              key={currentSlide.id}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-6 inline-flex flex-wrap items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-300 backdrop-blur-sm shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+              transition={{ duration: 0.5 }}
+              className="mb-6 inline-flex flex-wrap items-center gap-2 rounded-full border border-cyan-400/40 bg-cyan-950/60 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-300 backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.2)]"
             >
-              <span>Gentle Care</span>
-              <span className="text-cyan-400">•</span>
-              <span>Advanced Technology</span>
-              <span className="text-cyan-400">•</span>
-              <span>Healthy Smiles</span>
+              {currentSlide.type === "video" ? (
+                <Video size={13} className="text-cyan-400 animate-pulse" />
+              ) : (
+                <Sparkles size={13} className="text-cyan-400" />
+              )}
+              <span>{currentSlide.label}</span>
+              <span className="text-cyan-400/50">•</span>
+              <span className="text-slate-300 font-normal">{currentSlide.tagline}</span>
             </motion.div>
 
             {/* Heading */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.35, ease: "easeOut" }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="font-display text-5xl font-extrabold leading-[0.96] tracking-[-0.03em] text-white sm:text-6xl lg:text-[78px]"
             >
               Modern Care
@@ -279,7 +387,7 @@ export default function Hero() {
                 <motion.span
                   initial={{ width: 0 }}
                   animate={{ width: "100%" }}
-                  transition={{ duration: 0.8, delay: 1 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
                   className="absolute -bottom-1 left-0 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"
                 />
               </span>
@@ -293,8 +401,8 @@ export default function Hero() {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55 }}
-              className="mt-7 max-w-[530px] font-sans text-base font-normal leading-relaxed text-slate-200/85 sm:text-lg"
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="mt-7 max-w-[530px] font-sans text-base font-normal leading-relaxed text-slate-200/90 sm:text-lg"
             >
               From routine checkups to advanced aesthetic transformations, we provide
               personalized dental care for your whole family in a serene, modern environment.
@@ -304,7 +412,7 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.7 }}
+              transition={{ duration: 0.7, delay: 0.55 }}
               className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center"
             >
               <MagneticHover>
@@ -326,7 +434,7 @@ export default function Hero() {
                 href="#about"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="group inline-flex items-center justify-center gap-3 rounded-full border border-cyan-400/30 bg-cyan-950/30 px-7 py-4 font-semibold text-white backdrop-blur-md transition hover:border-cyan-400/60 hover:bg-cyan-500/15"
+                className="group inline-flex items-center justify-center gap-3 rounded-full border border-cyan-400/30 bg-cyan-950/40 px-7 py-4 font-semibold text-white backdrop-blur-md transition hover:border-cyan-400/60 hover:bg-cyan-500/15"
               >
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-cyan-400 text-slate-950 shadow-sm group-hover:scale-110 transition-transform">
                   <Play size={11} fill="currentColor" className="ml-0.5" />
@@ -339,8 +447,8 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="mt-11 flex flex-wrap items-center gap-6 rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-md max-w-fit"
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="mt-11 flex flex-wrap items-center gap-6 rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-md max-w-fit"
             >
               {/* Patients */}
               <div className="flex items-center gap-3">
@@ -351,7 +459,7 @@ export default function Hero() {
                         key={index}
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        transition={{ delay: 1 + index * 0.15 }}
+                        transition={{ delay: 0.8 + index * 0.15 }}
                         className="relative h-10 w-10 overflow-hidden rounded-full border-2 border-[#171717] shadow-md bg-slate-800"
                       >
                         <Image
@@ -407,11 +515,65 @@ export default function Hero() {
               </div>
             </motion.div>
           </div>
+
+          {/* RIGHT: INTERACTIVE 4-SLIDE MEDIA SWITCHER (3 IMAGES + VIDEO) */}
+          <div className="mt-12 lg:mt-0 flex flex-col items-end gap-3 z-30">
+            <div className="flex items-center gap-2 rounded-full border border-white/20 bg-slate-950/60 p-1.5 backdrop-blur-xl shadow-2xl">
+              {heroSlides.map((slide, idx) => {
+                const isActive = activeSlideIndex === idx;
+
+                return (
+                  <button
+                    key={slide.id}
+                    onClick={() => setActiveSlideIndex(idx)}
+                    className={`group relative flex items-center gap-2.5 rounded-full px-4 py-2 text-xs font-bold transition-all duration-300 ${
+                      isActive
+                        ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30 scale-105"
+                        : "text-slate-300 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {slide.type === "video" ? (
+                      <Video size={13} className={isActive ? "text-white" : "text-cyan-400"} />
+                    ) : (
+                      <span className={`h-2 w-2 rounded-full ${isActive ? "bg-white animate-pulse" : "bg-cyan-400"}`} />
+                    )}
+                    <span>{slide.pillBadge}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Video Controls (When Video Slide is Active) */}
+            {currentSlide.type === "video" && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 rounded-full border border-white/20 bg-black/60 px-4 py-1.5 text-xs text-white backdrop-blur-md"
+              >
+                <button
+                  onClick={handleVideoTogglePlay}
+                  className="flex items-center gap-1 text-cyan-300 hover:text-white font-semibold"
+                >
+                  {isPlaying ? <Pause size={13} /> : <Play size={13} />}
+                  <span>{isPlaying ? "Pause Tour" : "Play Tour"}</span>
+                </button>
+                <span className="h-3 w-px bg-white/20" />
+                <button
+                  onClick={handleVideoToggleMute}
+                  className="flex items-center gap-1 text-cyan-300 hover:text-white font-semibold"
+                >
+                  {isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}
+                  <span>{isMuted ? "Unmute Sound" : "Muted"}</span>
+                </button>
+              </motion.div>
+            )}
+          </div>
+
         </div>
       </div>
 
       {/* =====================================================
-          BOTTOM WHITE WAVE (ORIGINAL SECTION WRAPPER DIVIDER)
+          BOTTOM WHITE WAVE
       ====================================================== */}
       <div className="absolute bottom-[-1px] left-0 z-20 w-full">
         <svg
@@ -451,7 +613,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
                   duration: 0.6,
-                  delay: 1.1 + index * 0.12,
+                  delay: 1 + index * 0.12,
                   ease: "easeOut",
                 }}
                 whileHover={{
