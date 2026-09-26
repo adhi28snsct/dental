@@ -17,12 +17,11 @@ interface Particle {
 }
 
 const SPARKLE_COLORS = [
-  "#22d3ee", // cyan-400
-  "#38bdf8", // sky-400
-  "#06b6d4", // cyan-500
-  "#f59e0b", // amber-500
-  "#fbbf24", // amber-400
-  "#ffffff", // pure white sparkle
+  "#E10600", // Signal Red
+  "#FF2A24", // Signal Red Hover
+  "#000000", // Pure Black
+  "#E5E5E5", // Line
+  "#FFFFFF", // Pure White
 ];
 
 export default function CustomCursor() {
@@ -68,24 +67,23 @@ export default function CustomCursor() {
 
       if (!isVisible) setIsVisible(true);
 
-      // Spawn magic tail sparkle particles on movement
       const dx = clientX - lastPosRef.current.x;
       const dy = clientY - lastPosRef.current.y;
       const dist = Math.hypot(dx, dy);
 
-      if (dist > 3) {
-        const count = Math.min(Math.floor(dist / 4), 3);
+      if (dist > 6) {
+        const count = Math.min(Math.floor(dist / 8), 2);
         for (let i = 0; i < count; i++) {
-          const spread = 6;
+          const spread = 4;
           particlesRef.current.push({
             x: clientX + (Math.random() - 0.5) * spread,
             y: clientY + (Math.random() - 0.5) * spread,
-            size: Math.random() * 3.5 + 1.5,
+            size: Math.random() * 2.5 + 1.2,
             color: SPARKLE_COLORS[Math.floor(Math.random() * SPARKLE_COLORS.length)],
-            vx: (Math.random() - 0.5) * 1.5 - dx * 0.05,
-            vy: (Math.random() - 0.5) * 1.5 - dy * 0.05 + 0.3,
-            alpha: 1,
-            decay: Math.random() * 0.035 + 0.02,
+            vx: (Math.random() - 0.5) * 1.2 - dx * 0.03,
+            vy: (Math.random() - 0.5) * 1.2 - dy * 0.03 + 0.2,
+            alpha: 0.85,
+            decay: Math.random() * 0.035 + 0.025,
             rotation: Math.random() * Math.PI * 2,
             vRot: (Math.random() - 0.5) * 0.2,
           });
@@ -96,20 +94,19 @@ export default function CustomCursor() {
 
     const handleMouseDown = () => {
       setIsClicked(true);
-      // Burst sparkles on click
       const { x, y } = mousePosRef.current;
-      for (let i = 0; i < 12; i++) {
-        const angle = (Math.PI * 2 * i) / 12 + Math.random() * 0.4;
-        const speed = Math.random() * 3.5 + 2;
+      for (let i = 0; i < 8; i++) {
+        const angle = (Math.PI * 2 * i) / 8 + Math.random() * 0.4;
+        const speed = Math.random() * 2.5 + 1.5;
         particlesRef.current.push({
           x,
           y,
-          size: Math.random() * 4 + 2,
+          size: Math.random() * 3 + 1.5,
           color: SPARKLE_COLORS[Math.floor(Math.random() * SPARKLE_COLORS.length)],
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
-          alpha: 1,
-          decay: Math.random() * 0.03 + 0.025,
+          alpha: 0.9,
+          decay: Math.random() * 0.03 + 0.03,
           rotation: Math.random() * Math.PI * 2,
           vRot: (Math.random() - 0.5) * 0.3,
         });
@@ -144,7 +141,6 @@ export default function CustomCursor() {
     document.body.addEventListener("mouseleave", handleMouseLeave);
     document.body.addEventListener("mouseenter", handleMouseEnter);
 
-    // Canvas particle render loop
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -181,14 +177,13 @@ export default function CustomCursor() {
         ctx.translate(p.x, p.y);
         ctx.rotate(p.rotation);
 
-        // Draw 4-point magic star sparkle
+        // Clean small diamond particle
         const r = p.size;
         ctx.beginPath();
-        ctx.moveTo(0, -r * 1.4);
-        ctx.quadraticCurveTo(0, 0, r * 1.4, 0);
-        ctx.quadraticCurveTo(0, 0, 0, r * 1.4);
-        ctx.quadraticCurveTo(0, 0, -r * 1.4, 0);
-        ctx.quadraticCurveTo(0, 0, 0, -r * 1.4);
+        ctx.moveTo(0, -r * 1.2);
+        ctx.lineTo(r * 0.8, 0);
+        ctx.lineTo(0, r * 1.2);
+        ctx.lineTo(-r * 0.8, 0);
         ctx.closePath();
         ctx.fill();
 
@@ -216,13 +211,13 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Sparkle Trail Canvas */}
+      {/* Particle Canvas */}
       <canvas
         ref={canvasRef}
         className="pointer-events-none fixed inset-0 z-[99998]"
       />
 
-      {/* Smooth Trailing Halo Ring */}
+      {/* Trailing Ring */}
       <motion.div
         style={{
           x: smoothX,
@@ -231,20 +226,20 @@ export default function CustomCursor() {
           translateY: "-50%",
         }}
         animate={{
-          scale: isClicked ? 0.75 : isHovered ? 1.7 : 1,
+          scale: isClicked ? 0.8 : isHovered ? 1.5 : 1,
           opacity: isVisible ? 1 : 0,
           borderColor: isHovered
-            ? "rgba(6, 182, 212, 0.9)"
-            : "rgba(6, 182, 212, 0.45)",
+            ? "rgba(225, 6, 0, 0.75)"
+            : "rgba(0, 0, 0, 0.25)",
           backgroundColor: isHovered
-            ? "rgba(6, 182, 212, 0.15)"
-            : "rgba(6, 182, 212, 0.04)",
+            ? "rgba(225, 6, 0, 0.08)"
+            : "transparent",
         }}
         transition={{ duration: 0.15, ease: "easeOut" }}
-        className="pointer-events-none fixed left-0 top-0 z-[99999] h-9 w-9 rounded-full border-2 shadow-[0_0_15px_rgba(6,182,212,0.35)] backdrop-blur-[0.5px]"
+        className="pointer-events-none fixed left-0 top-0 z-[99999] h-8 w-8 rounded-full border border-solid"
       />
 
-      {/* Precision Center Dot */}
+      {/* Center Precision Point */}
       <motion.div
         style={{
           x: mouseX,
@@ -253,12 +248,12 @@ export default function CustomCursor() {
           translateY: "-50%",
         }}
         animate={{
-          scale: isClicked ? 1.6 : isHovered ? 0.5 : 1,
+          scale: isClicked ? 1.4 : isHovered ? 0.6 : 1,
           opacity: isVisible ? 1 : 0,
-          backgroundColor: isHovered ? "#38bdf8" : "#22d3ee",
+          backgroundColor: isHovered ? "#FF2A24" : "#E10600",
         }}
         transition={{ duration: 0.1 }}
-        className="pointer-events-none fixed left-0 top-0 z-[99999] h-2.5 w-2.5 rounded-full shadow-[0_0_10px_#22d3ee,0_0_20px_#06b6d4]"
+        className="pointer-events-none fixed left-0 top-0 z-[99999] h-2 w-2 rounded-full"
       />
     </>
   );

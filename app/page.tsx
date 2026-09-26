@@ -1,5 +1,6 @@
 import Hero from "@/components/hero";
 import About from "@/components/about";
+import ReceptionReveal from "@/components/ReceptionReveal";
 import Doctors from "@/components/Doctors";
 import MasterLaboratory from "@/components/MasterLaboratory";
 import Services from "@/components/Services";
@@ -13,53 +14,60 @@ import Footer from "@/components/Footer";
 import FloatingWidget from "@/components/FloatingWidget";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollTeethBackground from "@/components/ScrollTeethBackground";
+import StickyNavbar from "@/components/StickyNavbar";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-[#FAFCFF] text-slate-900 selection:bg-cyan-500 selection:text-white font-sans">
-      {/* Magic Particle Sparkle Cursor */}
+    <main className="relative min-h-screen bg-[#FFFFFF] text-[#000000] selection:bg-[#E10600] selection:text-white font-sans">
+      {/* Persistent Global Sticky Navigation */}
+      <StickyNavbar />
+
+      {/* Particle Cursor */}
       <CustomCursor />
 
-      {/* Dynamic Scroll-Driven Teeth Evolution Background (Damaged → Treatment → Open Arch → Radiant Smile) */}
+      {/* Background Evolutionary Watermark Layer */}
       <ScrollTeethBackground />
 
       {/* 01 — Hero */}
       <Hero />
 
-      {/* 02 — About / The Clinic */}
+      {/* 02 — About / Philosophy */}
       <About />
+
+      {/* 02.5 — Reception & Concierge Parallax Reveal (Brentwood / OriginalSmile inspired) */}
+      <ReceptionReveal />
 
       {/* 03 — Doctors / Specialists */}
       <Doctors />
 
-      {/* 04 — M.Vision Inspired In-House Master Ceramic Lab & 40x Microscope Precision */}
+      {/* 04 — Painless Sleep Dentistry Suite */}
       <MasterLaboratory />
 
-      {/* 05 — Services */}
+      {/* 05 — Clinical Services */}
       <Services />
 
       {/* 06 — The DentArt Approach */}
       <Approach />
 
-      {/* 07 — Treatments / Signature Smile */}
+      {/* 07 — Specialized Treatments */}
       <Treatments />
 
-      {/* 08 — Smile Transformations (Before & After) */}
+      {/* 08 — Transformations (Before & After) */}
       <Transformations />
 
       {/* 09 — Patient Stories */}
       <Reviews />
 
-      {/* 10 — Clinic / Technology */}
+      {/* 10 — Clinic Technology */}
       <ClinicTechnology />
 
-      {/* 11 — Contact / Appointment */}
+      {/* 11 — Contact / Consultation */}
       <Contact />
 
       {/* 12 — Footer */}
       <Footer />
 
-      {/* Floating Emergency & Quick Booking Access */}
+      {/* Floating Quick Action */}
       <FloatingWidget />
     </main>
   );

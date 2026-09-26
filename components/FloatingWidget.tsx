@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUp, Calendar, Phone } from "lucide-react";
+import { ArrowUp, Calendar } from "lucide-react";
 
 export default function FloatingWidget() {
   const [visible, setVisible] = useState(false);
@@ -28,44 +28,29 @@ export default function FloatingWidget() {
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.8 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 30, scale: 0.8 }}
-          transition={{ type: "spring", stiffness: 350, damping: 25 }}
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-3"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 16 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-2"
         >
-          {/* Quick Book Consultation Floating Action Button */}
-          <motion.a
+          {/* Quick Book Consultation Action */}
+          <a
             href="#appointment"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2.5 rounded-full bg-gradient-to-r from-cyan-500 via-cyan-600 to-blue-600 px-5 py-3 text-xs font-bold text-white shadow-lg shadow-cyan-500/25 backdrop-blur-md hover:scale-105 transition-transform"
+            className="flex items-center gap-2 rounded-sm bg-[#E10600] px-4 py-2.5 font-mono text-xs font-medium tracking-wide text-white shadow-md transition-colors hover:bg-[#FF2A24]"
           >
-            <Calendar size={15} />
-            <span>Book Visit</span>
-          </motion.a>
-
-          {/* Quick Call Button */}
-          <motion.a
-            href="tel:+919876543210"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Call clinic directly"
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-cyan-600 border border-slate-200 shadow-xl backdrop-blur-md hover:border-cyan-400"
-          >
-            <Phone size={17} />
-          </motion.a>
+            <Calendar size={13} className="text-white" />
+            <span>Book consultation</span>
+          </a>
 
           {/* Back to top Button */}
-          <motion.button
+          <button
             onClick={scrollToTop}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
             aria-label="Scroll to top of page"
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-slate-700 border border-slate-200 shadow-xl transition-colors hover:border-cyan-400 hover:text-cyan-600 backdrop-blur-md"
+            className="flex h-9 w-9 items-center justify-center rounded-sm border border-[#E5E5E5] bg-[#FFFFFF] text-[#000000] shadow-md transition-colors hover:border-[#E10600] hover:text-[#E10600]"
           >
-            <ArrowUp size={18} />
-          </motion.button>
+            <ArrowUp size={15} />
+          </button>
         </motion.div>
       )}
     </AnimatePresence>

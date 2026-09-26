@@ -2,9 +2,8 @@
 
 import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
-import { ArrowRight, MoveHorizontal, Sparkles, Check } from "lucide-react";
-import { FadeIn, MagneticHover } from "./MotionWrapper";
-
+import { ArrowRight, MoveHorizontal, Check } from "lucide-react";
+import { FadeIn } from "./MotionWrapper";
 import SectionWrapper from "./SectionWrapper";
 
 const cases = [
@@ -41,7 +40,7 @@ const cases = [
     title: "Clear Invisible Aligners",
     subtitle: "Discreet Orthodontic Realignment",
     duration: "6 Months",
-    doctor: "Dr. Sarah Jones",
+    doctor: "Dr. Sarah Mitchell",
     beforeImage: "/services/orthodontics.jpg",
     afterImage: "/services/general-dentistry.jpg",
     results: [
@@ -54,7 +53,7 @@ const cases = [
 
 export default function Transformations() {
   const [activeCase, setActiveCase] = useState(0);
-  const [sliderPosition, setSliderPosition] = useState(50); // percentage (0 to 100)
+  const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -88,42 +87,33 @@ export default function Transformations() {
 
   return (
     <SectionWrapper
-      topVariant="none"
-      variant="none"
-      className="bg-[#FAFCFF] py-24 text-slate-900 lg:py-32"
+      id="transformations"
+      variant="ornament"
+      tone="light"
+      className="bg-[#FFFFFF] py-24 text-[#000000] lg:py-36"
     >
-      {/* Ambient background blur */}
-      <div className="pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-cyan-100/60 blur-3xl" />
-      <div className="pointer-events-none absolute -right-40 bottom-20 h-96 w-96 rounded-full bg-blue-100/50 blur-3xl" />
-
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-
         {/* SECTION HEADER */}
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn direction="up">
-            <div className="mb-4 flex items-center justify-center gap-3">
-              <span className="h-px w-10 bg-cyan-500" />
-              <span className="font-sans text-xs font-bold uppercase tracking-[0.25em] text-cyan-600">
-                Visible Results
-              </span>
-              <span className="h-px w-10 bg-cyan-500" />
-            </div>
+            <p className="font-serif text-lg italic text-[#E10600]">
+              Documented outcomes
+            </p>
 
-            <h2 className="font-display text-4xl font-extrabold tracking-[-0.03em] text-slate-950 sm:text-5xl lg:text-6xl">
-              See the{" "}
-              <span className="font-serif italic font-normal text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600">
-                difference.
-              </span>
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-[1.12] tracking-tight text-[#000000] sm:text-5xl lg:text-6xl">
+              See the visible
+              <br />
+              difference.
             </h2>
 
-            <p className="mx-auto mt-5 max-w-xl font-sans text-base leading-relaxed text-slate-600">
-              Real treatment. Visible change. Slide left and right to inspect the
-              artistry, precision, and natural results achieved at DentArt.
+            <p className="mx-auto mt-6 max-w-xl text-[15px] leading-7 text-[#555555]">
+              Real treatment. Documented clinical change. Slide horizontally to inspect
+              the ceramic craft, precision margins, and natural tooth translucency.
             </p>
           </FadeIn>
 
-          {/* Case Study Switcher Pills */}
-          <FadeIn direction="up" delay={0.2} className="mt-8 flex flex-wrap justify-center gap-3">
+          {/* Case Study Switcher Tabs */}
+          <FadeIn direction="up" delay={0.15} className="mt-8 flex flex-wrap justify-center gap-2.5">
             {cases.map((c, index) => (
               <button
                 key={c.id}
@@ -131,10 +121,10 @@ export default function Transformations() {
                   setActiveCase(index);
                   setSliderPosition(50);
                 }}
-                className={`rounded-full px-5 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                className={`rounded-sm px-5 py-2 text-xs font-medium tracking-wide transition-colors ${
                   activeCase === index
-                    ? "bg-slate-950 text-white shadow-md scale-105"
-                    : "border border-slate-200 bg-white text-slate-700 hover:border-cyan-400 hover:text-cyan-600 shadow-sm"
+                    ? "bg-[#E10600] text-white"
+                    : "border border-[#E5E5E5] bg-[#FFFFFF] text-[#000000] hover:border-[#000000]"
                 }`}
               >
                 {c.title}
@@ -145,7 +135,6 @@ export default function Transformations() {
 
         {/* BEFORE / AFTER DRAGGABLE VIEWER */}
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-
           {/* Interactive Slider Container */}
           <FadeIn direction="right" duration={0.8}>
             <div
@@ -155,7 +144,7 @@ export default function Transformations() {
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseUp}
               onTouchMove={handleTouchMove}
-              className="relative h-[360px] sm:h-[460px] lg:h-[500px] w-full overflow-hidden rounded-[2.5rem] border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.12)] select-none cursor-ew-resize bg-slate-950"
+              className="relative h-[360px] sm:h-[460px] lg:h-[500px] w-full overflow-hidden rounded-sm border border-[#E5E5E5] select-none cursor-ew-resize bg-[#000000]"
             >
               {/* AFTER Image (Full background) */}
               <div className="absolute inset-0 h-full w-full">
@@ -166,12 +155,12 @@ export default function Transformations() {
                   priority
                   className="object-cover"
                 />
-                <div className="absolute bottom-6 right-6 rounded-full bg-cyan-500 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md shadow-md">
-                  AFTER
+                <div className="absolute bottom-5 right-5 rounded-sm bg-[#E10600] px-3.5 py-1 font-mono text-xs font-medium text-white shadow-sm">
+                  After
                 </div>
               </div>
 
-              {/* BEFORE Image (Clipped overlay using CSS clip-path) */}
+              {/* BEFORE Image (Clipped overlay) */}
               <div
                 className="absolute inset-0 h-full w-full overflow-hidden"
                 style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
@@ -182,106 +171,99 @@ export default function Transformations() {
                     alt="Before dental treatment"
                     fill
                     priority
-                    className="object-cover grayscale-[35%]"
+                    className="object-cover grayscale-[30%]"
                   />
-                  <div className="absolute bottom-6 left-6 rounded-full bg-slate-950/85 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-md shadow-md border border-white/20">
-                    BEFORE
+                  <div className="absolute bottom-5 left-5 rounded-sm border border-white/20 bg-[#000000]/80 px-3.5 py-1 font-mono text-xs font-medium text-white backdrop-blur-sm shadow-sm">
+                    Before
                   </div>
                 </div>
               </div>
 
               {/* Slider Divider Line */}
               <div
-                className="absolute inset-y-0 w-1 bg-white shadow-[0_0_15px_rgba(6,182,212,0.8)] z-20 pointer-events-none"
+                className="absolute inset-y-0 w-px bg-white z-20 pointer-events-none"
                 style={{ left: `${sliderPosition}%` }}
               >
-                {/* Floating Central Handle */}
-                <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-xl shadow-cyan-500/50">
-                  <MoveHorizontal size={20} className="stroke-[2.5]" />
+                {/* Solid Signal Red Slider Handle */}
+                <div className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-sm bg-[#E10600] text-white shadow-lg border border-white/20">
+                  <MoveHorizontal size={18} />
                 </div>
               </div>
 
-              {/* Interactive Helper Prompt */}
-              <div className="absolute top-6 left-1/2 -translate-x-1/2 rounded-full border border-white/30 bg-slate-950/70 px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-white backdrop-blur-md shadow-lg pointer-events-none">
-                Drag Slider To Compare
+              {/* Helper Prompt */}
+              <div className="absolute top-5 left-1/2 -translate-x-1/2 rounded-sm border border-white/20 bg-[#000000]/80 px-3.5 py-1 font-mono text-[11px] font-medium text-[#FFFFFF] backdrop-blur-sm pointer-events-none">
+                Drag to compare
               </div>
             </div>
           </FadeIn>
 
           {/* Clinical Results & Case Study Details */}
-          <FadeIn direction="left" delay={0.2} className="flex flex-col justify-between">
-            <div className="rounded-[2rem] border border-slate-200/90 bg-white p-8 shadow-xl backdrop-blur-xl">
-              <div className="inline-flex items-center gap-2 rounded-full bg-cyan-50 px-3.5 py-1 text-xs font-bold uppercase tracking-widest text-cyan-700 border border-cyan-200">
-                <Sparkles size={14} />
-                Clinical Case Study
-              </div>
+          <FadeIn direction="left" delay={0.15} className="flex flex-col justify-between">
+            <div className="rounded-sm border border-[#E5E5E5] bg-[#FFFFFF] p-8">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#E10600]">
+                Clinical archive case
+              </span>
 
-              <h3 className="mt-4 font-display text-2xl sm:text-3xl font-extrabold text-slate-950 tracking-tight">
+              <h3 className="mt-2 font-serif text-2xl font-medium tracking-tight text-[#000000] sm:text-3xl">
                 {currentCase.title}
               </h3>
 
-              <p className="mt-1 font-sans text-sm font-semibold text-cyan-700">
+              <p className="mt-1 font-serif italic text-sm text-[#555555]">
                 {currentCase.subtitle}
               </p>
 
-              <div className="mt-6 grid grid-cols-2 gap-4 rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
+              <div className="mt-6 grid grid-cols-2 gap-4 border-y border-[#E5E5E5] py-4">
                 <div>
-                  <p className="text-[11px] uppercase tracking-wider text-slate-500 font-bold">
-                    Treatment Duration
+                  <p className="font-mono text-xs text-[#666666]">
+                    Treatment timeframe
                   </p>
-                  <p className="mt-0.5 font-display text-base font-extrabold text-slate-950">
+                  <p className="mt-0.5 font-serif text-lg font-medium text-[#000000]">
                     {currentCase.duration}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[11px] uppercase tracking-wider text-slate-500 font-bold">
-                    Lead Clinician
+                  <p className="font-mono text-xs text-[#666666]">
+                    Lead clinician
                   </p>
-                  <p className="mt-0.5 font-display text-base font-extrabold text-slate-950">
+                  <p className="mt-0.5 font-serif text-lg font-medium text-[#000000]">
                     {currentCase.doctor}
                   </p>
                 </div>
               </div>
 
-              <div className="mt-6 space-y-3">
-                <p className="font-sans text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Key Improvements Achieved:
+              <div className="mt-6 space-y-2.5">
+                <p className="font-mono text-[11px] uppercase tracking-wider text-[#E10600]">
+                  Outcomes achieved
                 </p>
                 {currentCase.results.map((res) => (
-                  <div key={res} className="flex items-start gap-3">
-                    <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 border border-cyan-200">
-                      <Check size={12} className="stroke-[3]" />
-                    </div>
-                    <p className="font-sans text-sm text-slate-700 font-medium">
+                  <div key={res} className="flex items-start gap-2.5">
+                    <Check size={14} className="mt-0.5 text-[#E10600] shrink-0" />
+                    <p className="text-sm text-[#555555]">
                       {res}
                     </p>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <MagneticHover>
-                  <a
-                    href="#appointment"
-                    className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-cyan-500 via-cyan-600 to-blue-600 px-7 py-3.5 text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:scale-105 hover:shadow-cyan-500/40"
-                  >
-                    <span>Book Smile Assessment</span>
-                    <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-                  </a>
-                </MagneticHover>
+              <div className="mt-8 flex flex-wrap items-center gap-4 pt-4 border-t border-[#E5E5E5]">
+                <a
+                  href="#appointment"
+                  className="inline-flex items-center gap-2 rounded-sm bg-[#E10600] px-7 py-3 text-xs font-medium tracking-wide text-white transition-colors hover:bg-[#FF2A24]"
+                >
+                  <span>Schedule smile assessment</span>
+                  <ArrowRight size={13} />
+                </a>
 
                 <a
                   href="#treatments"
-                  className="text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-cyan-600 transition-colors"
+                  className="text-xs font-medium text-[#000000] transition-colors hover:text-[#E10600]"
                 >
-                  Explore Treatments →
+                  Explore treatments →
                 </a>
               </div>
             </div>
           </FadeIn>
-
         </div>
-
       </div>
     </SectionWrapper>
   );

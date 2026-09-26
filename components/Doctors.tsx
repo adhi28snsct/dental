@@ -9,10 +9,10 @@ import {
   Star,
   Sparkles,
   ArrowRight,
-  CheckCircle2,
+  Check,
 } from "lucide-react";
 import SectionWrapper from "./SectionWrapper";
-import { FadeIn, StaggerContainer, StaggerItem, MagneticHover } from "./MotionWrapper";
+import { FadeIn, StaggerContainer, StaggerItem } from "./MotionWrapper";
 
 const doctors = [
   {
@@ -38,7 +38,7 @@ const doctors = [
     image: "/doctor-2.jpg",
     rating: "4.95",
     reviewsCount: 420,
-    specialties: ["Clear Invisible Aligners", "Porcelain Veneers", "Digital Smile Design (DSD)"],
+    specialties: ["Clear Invisible Aligners", "Porcelain Veneers", "Digital Smile Design"],
     education: "King's College London Orthodontics",
     availability: "Tue, Thu, Sat • 10:00 AM - 6:30 PM",
     featuredBadge: "Smile Design Specialist",
@@ -52,7 +52,7 @@ const doctors = [
     image: "/doctor-3.jpg",
     rating: "4.92",
     reviewsCount: 290,
-    specialties: ["Microscopic Root Canal", "Laser Teeth Whitening", "Painless Bio-Ceramic Fillings"],
+    specialties: ["Microscopic Root Canal", "Laser Teeth Whitening", "Bio-Ceramic Restorations"],
     education: "Gold Medalist • Aesthetic Dentistry",
     availability: "Mon – Sat • 9:00 AM - 7:00 PM",
     featuredBadge: "Painless Care Expert",
@@ -62,162 +62,148 @@ const doctors = [
 export default function Doctors() {
   return (
     <SectionWrapper
-      className="bg-[#F8FAFC] py-24 text-slate-900 lg:py-32"
+      id="doctors"
+      variant="ornament"
+      tone="light"
+      className="bg-[#FFFFFF] py-24 text-[#000000] lg:py-36"
     >
-      <div id="doctors" className="relative">
-        {/* Ambient background glows */}
-        <div className="pointer-events-none absolute -left-20 top-1/4 h-[500px] w-[500px] rounded-full bg-cyan-100/50 blur-[160px]" />
-        <div className="pointer-events-none absolute -right-20 bottom-10 h-[500px] w-[500px] rounded-full bg-sky-100/50 blur-[160px]" />
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        {/* SECTION HEADER */}
+        <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <FadeIn direction="up">
+            <p className="font-serif text-lg italic text-[#E10600]">
+              Clinical masters
+            </p>
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-[1.12] tracking-tight text-[#000000] sm:text-5xl lg:text-6xl">
+              Meet the dental
+              <br />
+              specialists.
+            </h2>
+          </FadeIn>
 
-        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-          {/* SECTION HEADER */}
-          <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <FadeIn direction="up">
-              <div className="mb-4 flex items-center gap-3">
-                <span className="h-px w-10 bg-cyan-500" />
-                <span className="text-xs font-bold uppercase tracking-[0.25em] text-cyan-600">
-                  World-Class Clinical Team
-                </span>
-              </div>
-
-              <h2 className="font-display text-4xl font-extrabold leading-[1.08] tracking-[-0.03em] sm:text-5xl lg:text-6xl text-slate-950">
-                Meet the dental{" "}
-                <br />
-                <span className="font-serif italic font-normal text-cyan-600">
-                  specialists.
-                </span>
-              </h2>
-            </FadeIn>
-
-            <FadeIn direction="left" delay={0.2} className="max-w-md">
-              <p className="font-sans text-base leading-7 text-slate-600">
-                Our board-certified dentists and master ceramists combine academic excellence with gentle, empathetic chairside care.
-              </p>
-            </FadeIn>
-          </div>
-
-          {/* DOCTORS GRID */}
-          <StaggerContainer
-            staggerDelay={0.15}
-            className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
-          >
-            {doctors.map((doctor) => (
-              <StaggerItem key={doctor.id}>
-                <div className="group relative flex flex-col justify-between overflow-hidden rounded-[2.25rem] border border-slate-200/90 bg-white p-6 shadow-sm transition-all duration-500 hover:border-cyan-400 hover:shadow-xl">
-                  <div>
-                    {/* Image Container with Featured Badge */}
-                    <div className="relative mb-6 h-72 w-full overflow-hidden rounded-2xl bg-slate-100 shadow-inner border border-slate-200">
-                      <Image
-                        src={doctor.image}
-                        alt={doctor.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                      />
-
-                      {/* Gradient overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-                      {/* Doctor Top Badge */}
-                      <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full border border-white/40 bg-white/90 px-3.5 py-1 text-[11px] font-bold text-slate-900 backdrop-blur-md shadow-sm">
-                        <Sparkles size={12} className="text-cyan-600" />
-                        <span>{doctor.featuredBadge}</span>
-                      </div>
-
-                      {/* Experience Rating Tag */}
-                      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl border border-white/30 bg-black/60 px-3.5 py-2 backdrop-blur-md text-white">
-                        <div className="flex items-center gap-1.5 text-cyan-300 text-xs font-bold">
-                          <Star size={13} className="fill-amber-400 text-amber-400" />
-                          <span>{doctor.rating}</span>
-                          <span className="text-slate-300 text-[10px]">({doctor.reviewsCount}+ reviews)</span>
-                        </div>
-
-                        <span className="text-[11px] font-semibold text-cyan-200">
-                          {doctor.experience}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Doctor Info */}
-                    <div className="mb-4">
-                      <div className="flex items-baseline justify-between gap-2">
-                        <h3 className="font-display text-2xl font-bold text-slate-950 group-hover:text-cyan-700 transition-colors">
-                          {doctor.name}
-                        </h3>
-                      </div>
-                      <p className="text-xs font-semibold text-cyan-600 uppercase tracking-wider mt-1">
-                        {doctor.degrees}
-                      </p>
-                      <p className="text-sm font-medium text-slate-500 mt-1">
-                        {doctor.role}
-                      </p>
-                    </div>
-
-                    {/* Education */}
-                    <div className="mb-4 flex items-center gap-2 rounded-xl bg-slate-50 p-3 text-xs text-slate-600 border border-slate-100">
-                      <GraduationCap size={16} className="text-cyan-600 shrink-0" />
-                      <span className="truncate">{doctor.education}</span>
-                    </div>
-
-                    {/* Specialties List */}
-                    <div className="mb-6 space-y-2">
-                      <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                        Focus Areas
-                      </p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {doctor.specialties.map((spec) => (
-                          <span
-                            key={spec}
-                            className="inline-flex items-center gap-1 rounded-lg bg-cyan-50 px-2.5 py-1 text-[11px] font-medium text-cyan-800 border border-cyan-200"
-                          >
-                            <CheckCircle2 size={10} className="text-cyan-600 shrink-0" />
-                            {spec}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Consultation CTA & Schedule */}
-                  <div className="border-t border-slate-100 pt-4">
-                    <div className="mb-3 flex items-center gap-1.5 text-[11px] text-slate-500">
-                      <Calendar size={13} className="text-cyan-600" />
-                      <span>{doctor.availability}</span>
-                    </div>
-
-                    <MagneticHover>
-                      <a
-                        href="#appointment"
-                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-cyan-600 to-blue-600 py-3 text-xs font-bold text-white shadow-md transition-all hover:shadow-lg"
-                      >
-                        <span>Book Consultation</span>
-                        <ArrowRight size={14} />
-                      </a>
-                    </MagneticHover>
-                  </div>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-
-          {/* Bottom Trust Guarantee Strip */}
-          <FadeIn direction="up" delay={0.3} className="mt-14">
-            <div className="flex flex-wrap items-center justify-around gap-6 rounded-2xl border border-slate-200 bg-white px-8 py-5 shadow-sm text-xs text-slate-600">
-              <div className="flex items-center gap-2.5">
-                <ShieldCheck size={18} className="text-cyan-600" />
-                <span className="font-medium">100% Certified Dental Board Specialists</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Award size={18} className="text-cyan-600" />
-                <span className="font-medium">Over 12,000+ Completed Smile Transformations</span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <Sparkles size={18} className="text-cyan-600" />
-                <span className="font-medium">Painless Computer-Guided Anesthesia</span>
-              </div>
-            </div>
+          <FadeIn direction="left" delay={0.15} className="max-w-md">
+            <p className="text-[15px] leading-7 text-[#555555]">
+              Our board-certified clinicians combine international academic training
+              with an unhurried, gentle approach to chairside care.
+            </p>
           </FadeIn>
         </div>
+
+        {/* DOCTORS GRID */}
+        <StaggerContainer
+          staggerDelay={0.1}
+          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {doctors.map((doctor) => (
+            <StaggerItem key={doctor.id}>
+              <div className="group flex flex-col justify-between rounded-sm border border-[#E5E5E5] bg-[#FFFFFF] p-6 transition-colors hover:border-[#E10600]">
+                <div>
+                  {/* Image Container with Badge */}
+                  <div className="relative mb-6 aspect-[4/5] w-full overflow-hidden rounded-sm border border-[#E5E5E5] bg-[#FFFFFF]">
+                    <Image
+                      src={doctor.image}
+                      alt={doctor.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                    />
+
+                    {/* Featured Role Badge */}
+                    <div className="absolute top-3 left-3 rounded-sm border border-[#E5E5E5] bg-[#FFFFFF]/95 px-2.5 py-1 backdrop-blur-sm">
+                      <span className="font-mono text-xs uppercase tracking-wide text-[#E10600]">
+                        {doctor.featuredBadge}
+                      </span>
+                    </div>
+
+                    {/* Rating Pill */}
+                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between rounded-sm border border-[#E5E5E5] bg-[#FFFFFF]/95 px-3 py-1.5 text-xs backdrop-blur-sm">
+                      <div className="flex items-center gap-1.5 font-medium text-[#000000]">
+                        <Star size={12} className="fill-[#E10600] text-[#E10600]" />
+                        <span>{doctor.rating}</span>
+                        <span className="text-[#666666]">({doctor.reviewsCount})</span>
+                      </div>
+
+                      <span className="font-mono text-xs text-[#000000]">
+                        {doctor.experience}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Doctor Info */}
+                  <div className="mb-4">
+                    <h3 className="font-serif text-2xl font-medium tracking-tight text-[#000000] transition-colors group-hover:text-[#E10600]">
+                      {doctor.name}
+                    </h3>
+                    <p className="mt-1 font-mono text-xs font-semibold text-[#E10600]">
+                      {doctor.degrees}
+                    </p>
+                    <p className="mt-1 text-sm text-[#555555]">
+                      {doctor.role}
+                    </p>
+                  </div>
+
+                  {/* Education */}
+                  <div className="mb-4 flex items-center gap-2 border-t border-[#E5E5E5] pt-3 text-xs text-[#555555]">
+                    <GraduationCap size={15} className="shrink-0 text-[#E10600]" />
+                    <span className="truncate">{doctor.education}</span>
+                  </div>
+
+                  {/* Specialties List */}
+                  <div className="mb-6 space-y-2">
+                    <p className="font-mono text-[11px] uppercase tracking-wider text-[#E10600]">
+                      Focus disciplines
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {doctor.specialties.map((spec) => (
+                        <span
+                          key={spec}
+                          className="inline-flex items-center gap-1 rounded-sm border border-[#E5E5E5] bg-[#FFFFFF] px-2.5 py-1 text-xs text-[#444444]"
+                        >
+                          <Check size={10} className="text-[#E10600]" />
+                          {spec}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Consultation CTA & Schedule */}
+                <div className="border-t border-[#E5E5E5] pt-4">
+                  <div className="mb-3 flex items-center gap-1.5 font-mono text-xs text-[#555555]">
+                    <Calendar size={13} className="text-[#E10600]" />
+                    <span>{doctor.availability}</span>
+                  </div>
+
+                  <a
+                    href="#contact"
+                    className="flex w-full items-center justify-center gap-2 rounded-sm bg-[#E10600] py-3 text-xs font-medium tracking-wide text-white transition-colors hover:bg-[#FF2A24]"
+                  >
+                    <span>Request consultation</span>
+                    <ArrowRight size={13} />
+                  </a>
+                </div>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        {/* Bottom Trust Guarantee Strip */}
+        <FadeIn direction="up" delay={0.2} className="mt-14">
+          <div className="flex flex-wrap items-center justify-around gap-6 rounded-sm border border-[#E5E5E5] bg-[#FFFFFF] px-8 py-5 text-xs text-[#555555]">
+            <div className="flex items-center gap-2.5">
+              <ShieldCheck size={16} className="text-[#E10600]" />
+              <span className="font-medium text-[#000000]">Board-certified dental specialists</span>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <Award size={16} className="text-[#E10600]" />
+              <span className="font-medium text-[#000000]">Over 12,000+ completed smile restorations</span>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <Sparkles size={16} className="text-[#E10600]" />
+              <span className="font-medium text-[#000000]">Painless single-tooth anesthesia</span>
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </SectionWrapper>
   );
